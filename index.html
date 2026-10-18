@@ -565,6 +565,51 @@ function setMode(m){
 
 ["cmpCost","cmpPrice","cmpShip","cmpCat","cmpProv"].forEach(id=>document.getElementById(id).addEventListener("input",renderCompare));
 ["srcPrice","srcMargin","srcShip"].forEach(id=>document.getElementById(id).addEventListener("input",renderSource));
+
+// URL prefill: lets fee-guide pages deep-link with a worked example pre-loaded
+// e.g. flipmath/?price=100&cost=25&ship=13&prov=ON&cat=most&tab=source&margin=40
+try{
+  const q=new URLSearchParams(location.search);
+  const MAP={price:"cmpPrice",cost:"cmpCost",ship:"cmpShip"};
+  let touched=false;
+  for(const k in MAP){
+    const v=q.get(k);
+    const el=document.getElementById(MAP[k]);
+    if(v!==null&&v!==""&&!isNaN(Number(v))&&el){el.value=v;touched=true;}
+  }
+  const pv=q.get("prov");
+  if(pv){
+    const p=document.getElementById("cmpProv");
+    if(p){
+      const up=pv.toUpperCase();
+      for(const o of p.options){
+        if(o.value.toUpperCase()===up){p.value=o.value;touched=true;break;}
+      }
+    }
+  }
+  const ct=q.get("cat");
+  if(ct){
+    const c=document.getElementById("cmpCat");
+    if(c){
+      for(const o of c.options){
+        if(o.value.toLowerCase()===ct.toLowerCase()){c.value=o.value;touched=true;break;}
+      }
+    }
+  }
+  const mg=q.get("margin");
+  const sp=document.getElementById("srcPrice");
+  const sm=document.getElementById("srcMargin");
+  const sh=document.getElementById("srcShip");
+  if(mg&&sm&&!isNaN(Number(mg)))sm.value=mg;
+  if(q.get("price")&&sp)sp.value=q.get("price");
+  if(q.get("ship")&&sh)sh.value=q.get("ship");
+  if(mg||q.get("price"))touched=true;
+  const tab=q.get("tab");
+  if(touched){
+    if(tab&&document.querySelector('#modeSwitch button[data-tab="'+tab+'"]'))setMode(tab);
+    else{renderCompare();renderSource();}
+  }
+}catch(e){/* prefill is best-effort */}
 renderCompare();
 </script>
 </body>
