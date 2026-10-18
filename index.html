@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en-CA">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FlipMath Canada — Reseller Profit & Fee Calculator (eBay, Poshmark, FB, Kijiji, Etsy, Vinted, Depop)</title>
+<meta name="description" content="Free Canadian reseller calculator. Compare what you really keep after fees on eBay.ca, Facebook Marketplace, Kijiji, Poshmark, Etsy, Vinted & Depop. Find max buy price, break-even & ROI. Updated 2026 rates.">
+<meta property="og:title" content="FlipMath Canada — Reseller Profit & Fee Calculator">
+<meta property="og:description" content="Compare net profit across eBay.ca, Facebook, Kijiji, Poshmark, Etsy, Vinted & Depop. Max buy price, break-even, ROI. Verified October 2026 rates. Free, no signup.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="cover-og.png">
+<meta property="og:locale" content="en_CA">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="FlipMath Canada — Reseller Profit & Fee Calculator">
+<meta name="twitter:description" content="Know your real profit before you buy. 8 Canadian selling platforms compared. Free, works offline.">
+<meta name="twitter:image" content="cover-og.png">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"SoftwareApplication","name":"FlipMath Canada","applicationCategory":"FinanceApplication","operatingSystem":"Any (web browser)","description":"Free Canadian reseller fee and profit calculator comparing eBay.ca, Facebook Marketplace, Kijiji, Poshmark Canada, Etsy Canada, Vinted Canada and Depop. Maximum buy price, break-even and ROI with verified October 2026 fee rates.","offers":{"@type":"Offer","price":"0","priceCurrency":"CAD"}}
+</script>
+<style>
+:root{
+  --bg:#f6f7f9; --card:#ffffff; --ink:#111827; --mut:#6b7280; --line:#e5e7eb;
+  --red:#d52b1e; --red-dark:#a31d13; --green:#047857; --green-bg:#ecfdf5; --amber:#b45309; --amber-bg:#fffbeb;
+  --rad:12px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.45;padding-bottom:60px}
+.wrap{max-width:880px;margin:0 auto;padding:0 16px}
+header{background:linear-gradient(135deg,#d52b1e 0%,#a31d13 100%);color:#fff;padding:28px 0 22px;margin-bottom:18px}
+header .wrap{display:flex;flex-wrap:wrap;align-items:baseline;gap:10px}
+h1{font-size:1.45rem;letter-spacing:.2px}
+header p{font-size:.9rem;opacity:.92;width:100%}
+.badge{display:inline-block;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.35);border-radius:999px;padding:2px 10px;font-size:.72rem;font-weight:600}
+h2{font-size:1.02rem;margin:22px 0 10px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+h2 .tag{font-size:.68rem;font-weight:700;color:var(--red);border:1px solid var(--red);border-radius:999px;padding:1px 8px;letter-spacing:.4px;text-transform:uppercase}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--rad);padding:16px;margin-bottom:14px;box-shadow:0 1px 2px rgba(16,24,40,.04)}
+label{display:block;font-size:.78rem;font-weight:600;color:var(--mut);margin:10px 0 4px;text-transform:uppercase;letter-spacing:.3px}
+input[type=number],select{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:8px;font-size:1.05rem;background:#fff}
+input:focus,select:focus{outline:2px solid var(--red);outline-offset:-1px}
+.grid{display:grid;gap:10px}
+.g2{grid-template-columns:1fr 1fr}
+.g3{grid-template-columns:1fr 1fr 1fr}
+@media(max-width:560px){.g2,.g3{grid-template-columns:1fr}}
+.hint{font-size:.75rem;color:var(--mut);margin-top:4px}
+table{width:100%;border-collapse:collapse;font-size:.88rem}
+th{text-align:left;font-size:.68rem;text-transform:uppercase;letter-spacing:.4px;color:var(--mut);padding:8px 6px;border-bottom:2px solid var(--line);white-space:nowrap}
+td{padding:10px 6px;border-bottom:1px solid var(--line);vertical-align:middle}
+tr:last-child td{border-bottom:none}
+.best td{background:var(--green-bg)}
+.pill{display:inline-block;border-radius:999px;padding:2px 9px;font-size:.72rem;font-weight:700}
+.pill.g{background:var(--green-bg);color:var(--green)}
+.pill.r{background:#fef2f2;color:var(--red)}
+.pill.m{background:var(--amber-bg);color:var(--amber)}
+.pname{font-weight:700}
+.sub{font-size:.72rem;color:var(--mut);display:block}
+.result{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:6px}
+@media(max-width:560px){.result{grid-template-columns:1fr}}
+.rbox{background:var(--green-bg);border:1px solid #a7f3d0;border-radius:10px;padding:12px;text-align:center}
+.rbox.neg{background:#fef2f2;border-color:#fecaca}
+.rbox .k{font-size:.68rem;font-weight:700;text-transform:uppercase;color:var(--mut);letter-spacing:.4px}
+.rbox .v{font-size:1.5rem;font-weight:800;color:var(--ink)}
+.rbox .v.pos{color:var(--green)} .rbox .v.neg{color:var(--red)}
+.note{font-size:.8rem;color:var(--mut);margin-top:10px;padding-top:10px;border-top:1px dashed var(--line)}
+.cta{background:linear-gradient(135deg,#111827,#1f2937);color:#fff;border-radius:var(--rad);padding:20px;margin:24px 0;text-align:center}
+.cta h3{font-size:1.05rem;margin-bottom:6px}
+.cta p{font-size:.85rem;opacity:.85;margin-bottom:12px}
+.btn{display:inline-block;background:var(--red);color:#fff;font-weight:800;padding:11px 22px;border-radius:10px;text-decoration:none;font-size:.95rem;border:none;cursor:pointer}
+.btn:hover{background:var(--red-dark)}
+footer{margin-top:30px;font-size:.72rem;color:var(--mut);text-align:center;padding:20px 16px;border-top:1px solid var(--line)}
+.switch{display:flex;gap:6px;background:#e9eaee;border-radius:10px;padding:4px;margin-bottom:4px}
+.switch button{flex:1;border:none;background:transparent;padding:9px 6px;border-radius:8px;font-weight:700;font-size:.82rem;color:var(--mut);cursor:pointer}
+.switch button.on{background:#fff;color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.12)}
+.tab{display:none}.tab.on{display:block}
+.err{color:var(--red);font-size:.8rem;margin-top:6px;display:none}
+/* ---- guide ---- */
+.guide{margin-top:26px}
+.guide h2{font-size:1.15rem;margin:26px 0 8px}
+.guide h3{font-size:.95rem;margin:16px 0 4px;color:#374151}
+.guide p{font-size:.88rem;margin:8px 0;color:#374151}
+.guide li{font-size:.88rem;color:#374151;margin:4px 0 4px 18px}
+.guide details{border:1px solid var(--line);border-radius:8px;padding:10px 14px;margin:8px 0;background:var(--card)}
+.guide summary{font-weight:600;font-size:.88rem;cursor:pointer;color:var(--ink)}
+.guide details p{margin:8px 0 2px}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <h1>🇨🇦 FlipMath Canada</h1>
+    <span class="badge" id="verBadge">2026 rates · verified Oct 2026</span>
+    <p>Know what you really keep. Compare fees across <strong>7 Canadian selling platforms</strong>, find your max buy price, break-even, and ROI — before you buy the item.</p>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <div class="switch" id="modeSwitch">
+    <button class="on" data-tab="compare" onclick="setMode('compare')">📊 Where to sell</button>
+    <button data-tab="source" onclick="setMode('source')">🎯 What to pay</button>
+    <button data-tab="breakEven" onclick="setMode('breakEven')">⚖️ Break-even</button>
+    <button data-tab="fees" onclick="setMode('fees')">🧾 Fee table</button>
+  </div>
+
+  <!-- ============ TAB: COMPARE ============ -->
+  <section class="tab on" id="tab-compare">
+    <h2>Where should I sell it?</h2>
+    <div class="card">
+      <div class="grid g3">
+        <div>
+          <label>Item cost (what you paid) $</label>
+          <input type="number" id="cmpCost" value="25" inputmode="decimal" step="0.01" min="0">
+        </div>
+        <div>
+          <label>Asking price $</label>
+          <input type="number" id="cmpPrice" value="100" inputmode="decimal" step="0.01" min="0">
+        </div>
+        <div>
+          <label>Shipping you'll pay $</label>
+          <input type="number" id="cmpShip" value="13" inputmode="decimal" step="0.01" min="0" >
+          <div class="hint">Leave 0 for local pickup. Canada Post domestic is typically $9–$17 for 1kg.</div>
+        </div>
+      </div>
+      <div class="grid g2" style="margin-top:2px">
+        <div>
+          <label>Category (for eBay & Etsy)</label>
+          <select id="cmpCat">
+            <option value="most">Most categories (eBay 13.6%)</option>
+            <option value="media">Books, Movies, Music (eBay 15.3%)</option>
+            <option value="collect">Trading cards, comics, coins (eBay 13.25%)</option>
+          </select>
+        </div>
+        <div>
+          <label>Your province (GST/HST on platform fees)</label>
+          <select id="cmpProv">
+            <option value="0.13">Ontario — HST 13%</option>
+            <option value="0.15">Nova Scotia, NB, NL — HST 15%</option>
+            <option value="0.15">PEI — HST 15%</option>
+            <option value="0.05">AB, BC, MB, NT, NU, QC, SK, YT — GST 5%</option>
+          </select>
+        </div>
+      </div>
+      <div class="err" id="cmpErr">Enter an asking price above $0.</div>
+    </div>
+
+    <div class="card" id="cmpResults" style="padding:8px 16px;overflow-x:auto"></div>
+    <div class="note">Assumes buyer pays shipping separately (fees are charged on the item price where the platform does so). Poshmark includes a prepaid label in the buyer's price. Adjust the shipping field to your true cost. <strong>Numbers are estimates — platforms change rates without notice.</strong></div>
+  </section>
+
+  <!-- ============ TAB: SOURCE ============ -->
+  <section class="tab" id="tab-source">
+    <h2>What's the most I should pay? <span class="tag">thrift-store mode</span></h2>
+    <div class="card">
+      <div class="grid g3">
+        <div>
+          <label>I can sell it for $</label>
+          <input type="number" id="srcPrice" value="100" inputmode="decimal" step="0.01" min="0">
+        </div>
+        <div>
+          <label>Target profit margin %</label>
+          <input type="number" id="srcMargin" value="40" inputmode="decimal" step="1" min="1" max="95">
+          <div class="hint">Net profit ÷ sale price. 40% is a healthy flip.</div>
+        </div>
+        <div>
+          <label>Shipping you'll pay $</label>
+          <input type="number" id="srcShip" value="13" inputmode="decimal" step="0.01" min="0">
+        </div>
+      </div>
+      <div class="err" id="srcErr">Enter a sale price and a margin between 1–95.</div>
+    </div>
+    <div class="card" id="srcResults" style="padding:8px 16px;overflow-x:auto">
+      <div class="hint" style="margin:12px 4px">Enter a target sale price to see your maximum buy price on each platform.</div>
+    </div>
+    <div class="note">Max buy = price where net profit after all fees, shipping and cost equals your target margin. Kijiji & Facebook local pickup have no platform fees, so they tolerate the highest buy prices — but sales can be slower for niche items.</div>
+  </section>
+
+  <!-- ============ TAB: BREAK-EVEN ============ -->
+  <section class="tab" id="tab-breakEven">
+    <h2>Break-even & profit detail</h2>
+    <div class="card">
+      <div class="grid g3">
+        <div>
+          <label>Platform</label>
+          <select id="bePlatform">
+            <option value="ebay">eBay.ca (most categories)</option>
+            <option value="fb_ship">Facebook Marketplace (shipped)</option>
+            <option value="fb_local">Facebook Marketplace (local pickup)</option>
+            <option value="kijiji">Kijiji (local)</option>
+            <option value="poshmark">Poshmark Canada</option>
+            <option value="etsy">Etsy Canada</option>
+            <option value="vinted">Vinted Canada</option>
+            <option value="depop">Depop Canada</option>
+          </select>
+        </div>
+        <div>
+          <label>Sale price $</label>
+          <input type="number" id="bePrice" value="100" inputmode="decimal" step="0.01" min="0">
+        </div>
+        <div>
+          <label>Item cost $</label>
+          <input type="number" id="beCost" value="25" inputmode="decimal" step="0.01" min="0">
+        </div>
+      </div>
+      <div class="grid g3" style="margin-top:2px">
+        <div>
+          <label>Shipping you'll pay $</label>
+          <input type="number" id="beShip" value="13" inputmode="decimal" step="0.01" min="0">
+        </div>
+        <div>
+          <label>Other costs $ (packaging, gas…)</label>
+          <input type="number" id="beOther" value="0" inputmode="decimal" step="0.01" min="0">
+        </div>
+        <div>
+          <label>&nbsp;</label>
+          <button class="btn" style="width:100%" onclick="beGo()">Calculate</button>
+        </div>
+      </div>
+    </div>
+    <div class="card" id="beResults"><div class="hint" style="margin:8px 4px">Press Calculate.</div></div>
+  </section>
+
+  <!-- ============ TAB: FEES ============ -->
+  <section class="tab" id="tab-fees">
+    <h2>Platform fee cheat-sheet <span class="tag">verified Oct 2026</span></h2>
+    <div class="card" style="overflow-x:auto">
+      <table id="feeTable"></table>
+      <div class="note">Sources: official eBay.ca fee page, official Poshmark.ca fee policy, Meta shipped-order fee, Etsy fee policy, Kijiji help centre. <strong>Never list on stale info alone — platforms change rates.</strong></div>
+    </div>
+    <div class="card">
+      <h2 style="margin-top:0">💰 Know a fellow reseller?</h2>
+      <p style="font-size:.88rem">FlipMath is free — share the link instead of a screenshot. If it saved you from a bad buy (or found you a better platform), that's the whole point.</p>
+    </div>
+  </section>
+
+  <!-- ============ SEO GUIDE ============ -->
+  <div class="guide">
+    <h2>Canadian reseller fees: the complete guide (verified October 2026)</h2>
+    <p>US-based fee calculators are wrong for Canada. HST gets charged on fees, Poshmark adds a flat minimum, Facebook doesn't charge 5% locally, and Vinted is free for sellers. These are the real numbers, pulled from each platform's own fee pages on <strong>October 18, 2026</strong> — the same numbers powering the calculator above.</p>
+    <h3>What each platform really charges Canadian sellers</h3>
+    <table>
+      <tr><th>Platform</th><th>Seller fee</th><th>Per-order / flat</th><th>Tax on fee</th><th>Shipping</th></tr>
+      <tr><td>eBay.ca</td><td>13.6% most (15.3% media, 13.25% cards/coins)</td><td>$0.40 (>$10) / $0.30 (≤$10)</td><td>Yes, on fee</td><td>You arrange; FVF includes shipping</td></tr>
+      <tr><td>Facebook Marketplace (shipped)</td><td>10%, min $0.80</td><td>$0.80 flat on orders ≤$8</td><td>Yes, on fee</td><td>You ship</td></tr>
+      <tr><td>Facebook Marketplace (pickup)</td><td>$0</td><td>—</td><td>—</td><td>Buyer picks up</td></tr>
+      <tr><td>Kijiji</td><td>$0 commission (buy/sell categories)</td><td>—</td><td>—</td><td>Buyer picks up</td></tr>
+      <tr><td>Poshmark Canada</td><td>20% (≥$20) / flat $3.95 (<$20)</td><td>$3.95 minimum</td><td>Yes, on fee</td><td>Prepaid label included</td></tr>
+      <tr><td>Etsy Canada</td><td>6.5% + 3% + $0.25 processing</td><td>$0.27 listing per item</td><td>Yes, on fees</td><td>You set it</td></tr>
+      <tr><td>Vinted Canada</td><td>$0 seller fee</td><td>—</td><td>—</td><td>Prepaid label included</td></tr>
+      <tr><td>Depop Canada</td><td>In flux — verify before relying on it</td><td>~3.3% + $0.60 est.</td><td>Verify</td><td>You ship</td></tr>
+    </table>
+    <h3>The “Facebook charges 5%” myth</h3>
+    <p>Search any flipping forum and you'll see “Facebook Marketplace takes 5%.” That's a US number from years ago — and it never applied to local pickup. In Canada, the reality today: <strong>10% on shipped sales through Meta's checkout (minimum $0.80), $0 for local pickup.</strong> If you hand the buyer the item in a parking lot, you keep every dollar.</p>
+    <h3>The sneaky one: sales tax on the fee</h3>
+    <p>Facebook, Poshmark, Etsy and Kijiji's paid tiers add GST/HST on top of their own fee. In Ontario that's another 13% of the fee. On a $300 Poshmark sale: 20% = $60 commission, plus $7.80 HST on it. Most napkin-math sellers forget this line and wonder why the payout is short. FlipMath adds it automatically based on your province.</p>
+    <h3>Worked example: one iPad, four very different payouts</h3>
+    <p>You buy an iPad Air for $120 and it sells for $320 with $13 shipping. In Ontario, after fees, tax-on-fees, shipping and item cost, you actually keep:</p>
+    <table>
+      <tr><th>Where it sold</th><th>Fees + tax on fees</th><th>You keep</th></tr>
+      <tr><td>eBay.ca</td><td>$49.63</td><td>$137.37</td></tr>
+      <tr><td>Poshmark</td><td>$72.32 (label incl.)</td><td>$127.68</td></tr>
+      <tr><td>Facebook shipped</td><td>$36.16</td><td>$150.84</td></tr>
+      <tr><td class="best">Kijiji / FB local / Vinted</td><td>$0</td><td>$200.00</td></tr>
+    </table>
+    <p>Same item, same price — a <strong>$72.63 spread</strong> decided entirely by where you listed it. That's why the “where to sell” tab exists.</p>
+    <h3>Frequently asked</h3>
+    <details><summary>Does Facebook Marketplace charge 5% in Canada?</summary><p>No. Shipped sales with Meta checkout cost 10% (minimum $0.80) in Canada as of October 2026. Local pickup sales are free. The 5% figure is an old US fee that no longer applies.</p></details>
+    <details><summary>What are eBay's seller fees in Canada right now?</summary><p>eBay.ca charges a 13.6% final value fee on most categories (15.3% for books, music and movies; 13.25% for trading cards, comics and coins) plus a $0.40 per-order fee for orders over $10 ($0.30 otherwise). You get 250 free listings per month, then insertion costs $0.30 each. GST/HST is added on the fee.</p></details>
+    <details><summary>Is Vinted really free for sellers in Canada?</summary><p>Yes — Vinted Canada charges sellers $0. The buyer pays a protection fee (~5% + $0.70). You ship with Vinted's prepaid label, and the label cost is deducted from your payout or paid by the buyer depending on your listing choice.</p></details>
+    <details><summary>Is Kijiji really free to sell on?</summary><p>In the buy/sell categories, yes: no commission and free listings. Kijiji only charges for featured/promoted ads, and separately for vehicles, jobs, real estate and services.</p></details>
+    <details><summary>Which Canadian platform has the lowest fees?</summary><p>For local pickup deals: Kijiji and Facebook local are $0. For shipped fashion: Vinted ($0 seller fee). For everything shipped outside fashion, Facebook Marketplace at 10% usually beats eBay.ca's 13.6% — but eBay often delivers higher sale prices and faster turnover, which is why you compare net, not fee percentage.</p></details>
+    <details><summary>Who pays for shipping?</summary><p>On Poshmark and Vinted, the platform's prepaid label is included (buyer typically pays the shipping line). On eBay, Facebook and Depop you arrange shipping — price it into the item or charge the buyer. The calculator has a shipping field for exactly this.</p></details>
+    <h3>Now the other half of the trade: what to PAY</h3>
+    <p>Knowing fees tells you where to sell. Knowing what to pay tells you what to buy. We put the sourcing side — the max-buy formula, category targets for tools/LEGO/consoles/clothing, and the five beginner mistakes — on a one-page printable cheat sheet: <a href="cheatsheet.html" style="color:var(--amber);font-weight:600">The Yard Sale Sourcing Cheat Sheet</a>.</p>
+    <p class="note" style="border:none;margin-top:18px">Rates verified October 18, 2026 from official platform fee pages. Platforms change fees without notice — estimates only, not financial or tax advice. FlipMath is not affiliated with any platform.</p>
+  </div>
+
+  <!-- ============ PRO CTA ============ -->
+  <div class="cta" id="proCta">
+    <h3>⚡ FlipMath Pro — batch mode, inventory P&L, editable rates</h3>
+    <p>Paste your whole sourcing list, get max buy prices for every item at once · track inventory with realized profit per item · update fee rates yourself the day platforms change them · printable cheat-cards. One-time payment, no subscription.</p>
+    <a class="btn" id="ctaBtn" href="#" rel="noopener">Get FlipMath Pro — $9</a>
+    <p style="margin-top:10px;font-size:.72rem;opacity:.65">Single file, works offline on any phone or laptop. No account needed.</p>
+  </div>
+
+</div>
+
+<footer>
+  <div class="wrap">
+    <p><strong>FlipMath Canada</strong> — fee data last verified <span id="verDate">October 18, 2026</span>. Estimates only; not financial advice. Platforms: eBay.ca FVF 13.6% most categories (+$0.40/order, 250 free listings/mo) · Facebook Marketplace 10% shipped (min $0.80), $0 local · Kijiji $0 commission (free buy/sell categories) · Poshmark CA 20% (min $3.95 under $20) · Etsy CA 6.5% + 3% + $0.25 + $0.27 listing · Vinted $0 seller fee · Depop CA — verify current selling fee. GST/HST added on fees where applicable.</p>
+  </div>
+</footer>
+
+<script>
+/* ================= FEE ENGINE (verified Oct 18 2026) =================
+   Each platform returns fees for {price, ship, cat, prov}. All CAD.
+   ship = shipping cost YOU pay (seller-paid shipping), not buyer-charged.
+*/
+const PRO = false; // pro build sets true
+
+const RATES = {
+  ebay: { most:0.136, media:0.153, collect:0.1325, orderOver10:0.40, orderUnder10:0.30 },
+  fb: { ship:0.10, flat:0.80 },
+  poshmark: { pct:0.20, flat:3.95, flatBelow:20 },
+  etsy: { txn:0.065, procPct:0.03, procFlat:0.25, listing:0.27 },
+  depop: { pct:0.033, flat:0.60 }
+};
+
+const PLATFORMS = {
+  ebay: {
+    name:"eBay.ca", sub:"most categories", ship:true,
+    fee(p){ // FVF on item price (buyer pays shipping separately)
+      const rate = p.cat==="media"?RATES.ebay.media:p.cat==="collect"?RATES.ebay.collect:RATES.ebay.most;
+      const perOrder = p.price<=10?RATES.ebay.orderUnder10:RATES.ebay.orderOver10;
+      const fvf = p.price*rate + perOrder;
+      const hst = fvf*p.prov;
+      return {fvf:hst?fvf+hst:fvf, parts:[`FVF ${(rate*100).toFixed(2)}%`, `order fee $${perOrder.toFixed(2)}`, hst?`HST/GST on fee $${hst.toFixed(2)}`:null].filter(Boolean), rate};
+    }
+  },
+  fb_ship: {
+    name:"Facebook Marketplace", sub:"shipped (Meta checkout)", ship:true,
+    fee(p){
+      const f = p.price<=8 ? RATES.fb.flat : Math.max(p.price*RATES.fb.ship, RATES.fb.flat);
+      const hst = f*p.prov;
+      return {fvf:f+hst, parts:[`${p.price<=8?"flat $"+RATES.fb.flat.toFixed(2):"10% of price"}`, hst?`HST/GST $${hst.toFixed(2)}`:null].filter(Boolean), rate:RATES.fb.ship};
+    }
+  },
+  fb_local: {
+    name:"Facebook Marketplace", sub:"local pickup", ship:false,
+    fee(p){ return {fvf:0, parts:["$0 — cash / e-Transfer"], rate:0}; }
+  },
+  kijiji: {
+    name:"Kijiji", sub:"local (free buy/sell categories)", ship:false,
+    fee(p){ return {fvf:0, parts:["$0 — no commission"], rate:0}; }
+  },
+  poshmark: {
+    name:"Poshmark Canada", sub:"prepaid label incl., buyer pays ship", ship:false,
+    fee(p){
+      const f = p.price<RATES.poshmark.flatBelow ? RATES.poshmark.flat : p.price*RATES.poshmark.pct;
+      const hst = f*p.prov;
+      return {fvf:f+hst, parts:[p.price<RATES.poshmark.flatBelow?"flat $"+RATES.poshmark.flat.toFixed(2):"20% commission", hst?`GST/HST on fee $${hst.toFixed(2)}`:null].filter(Boolean), rate:p.price<RATES.poshmark.flatBelow?null:RATES.poshmark.pct};
+    }
+  },
+  etsy: {
+    name:"Etsy Canada", sub:"handmade/vintage/craft supplies only", ship:true,
+    fee(p){
+      const txn = p.price*RATES.etsy.txn;
+      const proc = p.price*RATES.etsy.procPct + RATES.etsy.procFlat;
+      const listing = RATES.etsy.listing;
+      const sum = txn+proc+listing;
+      const hst = sum*p.prov;
+      return {fvf:sum+hst, parts:[(RATES.etsy.txn*100).toFixed(1)+"% transaction",(RATES.etsy.procPct*100).toFixed(1)+"% + $"+RATES.etsy.procFlat.toFixed(2)+" processing","$"+RATES.etsy.listing.toFixed(2)+" listing", hst?`GST/HST on fees $${hst.toFixed(2)}`:null].filter(Boolean), rate:RATES.etsy.txn};
+    }
+  },
+  vinted: {
+    name:"Vinted Canada", sub:"seller fees $0 — buyer pays protection", ship:false,
+    fee(p){ return {fvf:0, parts:["$0 seller fee"], rate:0}; }
+  },
+  depop: {
+    name:"Depop Canada", sub:"verify current selling fee", ship:true,
+    fee(p){
+      const proc = p.price*RATES.depop.pct + RATES.depop.flat; // conservative CAD estimate
+      return {fvf:proc, parts:["~3.3% + $0.60 processing (est.)","verify current CA selling fee"], rate:0.033};
+    }
+  }
+};
+
+const money = n => (n<0?"-$":"$") + Math.abs(n).toFixed(2);
+
+/* ---------- DOM-safe rendering helpers (no innerHTML) ---------- */
+function el(tag, cls, text){ const e=document.createElement(tag); if(cls)e.className=cls; if(text!==undefined)e.textContent=text; return e; }
+function clearBox(b){ while(b.firstChild) b.removeChild(b.firstChild); }
+function buildTable(headers, rows){
+  const t = el("table");
+  const trh = el("tr");
+  headers.forEach(h=>trh.appendChild(el("th",null,h)));
+  t.appendChild(trh);
+  rows.forEach(r=>{
+    const tr = el("tr", r.best?"best":null);
+    r.cells.forEach(c=>tr.appendChild(c));
+    t.appendChild(tr);
+  });
+  return t;
+}
+function platformCell(name, sub, best){
+  const td = el("td");
+  td.appendChild(el("span","pname",name));
+  td.appendChild(el("span","sub",sub));
+  if(best) td.appendChild(el("span","pill g","BEST"));
+  return td;
+}
+function strongMoney(v, colorWhenNeg){
+  const td = el("td");
+  const s = el("strong", null, money(v));
+  if(colorWhenNeg) s.style.color = v>=0 ? "var(--green)" : "var(--red)";
+  td.appendChild(s);
+  return td;
+}
+
+function shipFor(id, ship){ return (PLATFORMS[id] && PLATFORMS[id].ship) ? ship : 0; }
+function inputs(){ return {
+  price: parseFloat(document.getElementById("cmpPrice").value)||0,
+  cost: parseFloat(document.getElementById("cmpCost").value)||0,
+  ship: parseFloat(document.getElementById("cmpShip").value)||0,
+  cat: document.getElementById("cmpCat").value,
+  prov: parseFloat(document.getElementById("cmpProv").value)
+};}
+
+/* ---------- COMPARE ---------- */
+function renderCompare(){
+  const p = inputs();
+  const err = document.getElementById("cmpErr");
+  const box = document.getElementById("cmpResults");
+  clearBox(box);
+  if(p.price<=0){ err.style.display="block"; return; }
+  err.style.display="none";
+
+  const rows = Object.entries(PLATFORMS).map(([id,pl])=>{
+    const f = pl.fee(p);
+    const sellerShip = shipFor(id, p.ship);
+    const net = p.price - f.fvf - sellerShip - p.cost;
+    const margin = p.price>0 ? net/p.price*100 : 0;
+    const roi = p.cost>0 ? net/p.cost*100 : null;
+    return {id, name:pl.name, sub:pl.sub, fvf:f.fvf, parts:f.parts, net, margin, roi};
+  }).sort((a,b)=>b.net-a.net);
+
+  const best = rows[0];
+  const tblRows = rows.map(r=>{
+    const feeTd = el("td", null, money(r.fvf));
+    feeTd.appendChild(el("span","sub",r.parts.join(" · ")));
+    const mTd = el("td");
+    mTd.appendChild(el("span","pill "+(r.margin>=25?"g":r.margin>=10?"m":"r"), r.margin.toFixed(0)+"%"));
+    return {
+      best: r===best,
+      cells:[
+        platformCell(r.name, r.sub, r===best),
+        feeTd,
+        strongMoney(r.net, true),
+        mTd,
+        el("td", null, r.roi===null?"∞":r.roi.toFixed(0)+"%")
+      ]
+    };
+  });
+  box.appendChild(buildTable(["Platform","Fees","Net profit","Margin","ROI"], tblRows));
+}
+
+/* ---------- SOURCE ---------- */
+function renderSource(){
+  const price=parseFloat(document.getElementById("srcPrice").value)||0;
+  const margin=parseFloat(document.getElementById("srcMargin").value)||0;
+  const ship=parseFloat(document.getElementById("srcShip").value)||0;
+  const err=document.getElementById("srcErr"), box=document.getElementById("srcResults");
+  clearBox(box);
+  if(price<=0||margin<=0||margin>95){err.style.display="block";return;}
+  err.style.display="none";
+  const m=margin/100;
+  const rows=Object.entries(PLATFORMS).map(([id,pl])=>{
+    const f=pl.fee({price,ship,cat:"most",prov:0.13});
+    const sellerShip=shipFor(id,ship);
+    const maxCost=price-f.fvf-sellerShip-m*price;
+    return {name:pl.name,sub:pl.sub,maxCost,parts:f.parts};
+  }).sort((a,b)=>b.maxCost-a.maxCost);
+  const top=rows[0];
+  const tblRows=rows.map(r=>{
+    const payTd=el("td");
+    const s=el("strong",null,money(r.maxCost));
+    s.style.color=r.maxCost>=0?"var(--green)":"var(--red)";
+    s.style.fontSize="1.15rem";
+    payTd.appendChild(s);
+    payTd.appendChild(el("span","sub","fees: "+r.parts.join(" · ")));
+    const netTd=el("td");
+    netTd.appendChild(el("span","pill g",money(price*m)+" ("+margin+"%)"));
+    return {best:r===top,cells:[platformCell(r.name,r.sub,false),payTd,netTd]};
+  });
+  box.appendChild(buildTable(["Platform","Max you should pay","Net at that price"],tblRows));
+  const note=el("div","note","If max pay shows negative, the platform's fees + shipping eat the whole margin at that sale price — sell elsewhere or negotiate harder.");
+  box.appendChild(note);
+}
+
+/* ---------- BREAK-EVEN ---------- */
+function beGo(){
+  const id=document.getElementById("bePlatform").value;
+  const price=parseFloat(document.getElementById("bePrice").value)||0;
+  const cost=parseFloat(document.getElementById("beCost").value)||0;
+  const ship=parseFloat(document.getElementById("beShip").value)||0;
+  const other=parseFloat(document.getElementById("beOther").value)||0;
+  const prov=parseFloat(document.getElementById("cmpProv").value);
+  const cat=document.getElementById("cmpCat").value;
+  const pl=PLATFORMS[id];
+  const f=pl.fee({price,ship,cat,prov});
+  const sellerShip=shipFor(id,ship);
+  const net=price-f.fvf-sellerShip-cost-other;
+  // break-even: price where net=0, solved numerically
+  const netAt=(pp)=>{const ff=pl.fee({price:pp,ship,cat,prov});const bs=shipFor(id,ship);return pp-ff.fvf-bs-cost-other;};
+  let lo=0.01, hi=5000;
+  for(let i=0;i<60;i++){const mid=(lo+hi)/2; if(netAt(mid)<0){lo=mid}else{hi=mid}}
+  const be=(lo+hi)/2;
+  const margin=price>0?net/price*100:0, roi=cost>0?net/cost*100:null;
+  const box=document.getElementById("beResults");
+  clearBox(box);
+  const res=el("div","result");
+  function rbox(k,v,cls,neg){const d=el("div","rbox"+(neg?" neg":""));d.appendChild(el("div","k",k));d.appendChild(el("div","v "+(cls||""),v));return d;}
+  res.appendChild(rbox("Net profit", money(net), net>=0?"pos":"neg", net<0));
+  res.appendChild(rbox("Break-even price", money(be), "", false));
+  res.appendChild(rbox(roi===null?"Margin":"Margin / ROI", margin.toFixed(0)+"%"+(roi!==null?" / "+roi.toFixed(0)+"%":""), net>=0?"pos":"neg", net<0));
+  box.appendChild(res);
+  const note=el("div","note");
+  note.appendChild(el("strong",null,pl.name+" "));
+  note.appendChild(document.createTextNode("fees on a $"+price.toFixed(2)+" sale: "+money(f.fvf)+" — "+f.parts.join(" · ")+". "));
+  note.appendChild(document.createTextNode(
+    sellerShip>0 ? "Shipping (seller-paid): "+money(ship)+". " :
+    (pl.ship===false && id!=="fb_local" && id!=="kijiji" ? "Buyer pays shipping on this platform. " : "")));
+  note.appendChild(document.createTextNode("Other costs: "+money(other)+". "));
+  if(net<0){
+    const w=el("strong"); w.style.color="var(--red)"; w.textContent="This sale loses money.";
+    note.appendChild(w);
+  } else {
+    note.appendChild(document.createTextNode("Break-even at a sale price of "));
+    const b=el("strong",null,money(be)); note.appendChild(b); note.appendChild(document.createTextNode("."));
+  }
+  box.appendChild(note);
+}
+
+/* ---------- FEE TABLE ---------- */
+function renderFeeTable(){
+  const t=document.getElementById("feeTable");
+  clearBox(t);
+  const trh=el("tr"); ["Platform","Commission","Extras","Notes"].forEach(h=>trh.appendChild(el("th",null,h)));
+  t.appendChild(trh);
+  const data=[
+    ["eBay.ca","13.6% most cats (≤$7.5k), 2.35% over | 15.3% media · 13.25% cards/coins","+$0.40/order (>$10) · $0.30 (≤$10) | 250 free listings/mo, then $0.30","FVF on item + shipping + tax"],
+    ["FB Marketplace","10% shipped (min $0.80) | $0 local pickup","Meta checkout only","Cash/e-Transfer local = $0"],
+    ["Kijiji","$0 commission","Free in buy/sell categories","Paid fees only in cars/jobs/real-estate"],
+    ["Poshmark CA","20% ($20+) | $3.95 flat (<$20)","+ GST/HST on the fee","Prepaid label included"],
+    ["Etsy CA","6.5% transaction","+ 3% + $0.25 processing · $0.27 listing · GST/HST on fees","Handmade/vintage/craft only"],
+    ["Vinted CA","$0 seller fee","Buyer pays ~5% + $0.70 protection","Best for clothes"],
+    ["Depop CA","verify current selling fee","~3.3% + $0.45 processing (US)","10% selling fee removed US/UK 2024 — check CA policy before listing"]
+  ];
+  data.forEach(r=>{
+    const tr=el("tr");
+    const td0=el("td"); td0.appendChild(el("span","pname",r[0])); tr.appendChild(td0);
+    r.slice(1,3).forEach((col,ci)=>{
+      const td=el("td");
+      const parts=col.split("|");
+      td.textContent=parts[0].trim();
+      if(parts[1]) td.appendChild(el("span","sub",parts[1].trim()));
+      tr.appendChild(td);
+    });
+    tr.appendChild(el("td",null,r[3]));
+    t.appendChild(tr);
+  });
+}
+
+/* ---------- MODE ---------- */
+function setMode(m){
+  document.querySelectorAll(".tab").forEach(t=>t.classList.remove("on"));
+  document.getElementById("tab-"+m).classList.add("on");
+  document.querySelectorAll("#modeSwitch button").forEach(b=>b.classList.toggle("on",b.dataset.tab===m));
+  if(m==="fees")renderFeeTable();
+  if(m==="compare")renderCompare();
+  if(m==="source")renderSource();
+}
+
+["cmpCost","cmpPrice","cmpShip","cmpCat","cmpProv"].forEach(id=>document.getElementById(id).addEventListener("input",renderCompare));
+["srcPrice","srcMargin","srcShip"].forEach(id=>document.getElementById(id).addEventListener("input",renderSource));
+renderCompare();
+</script>
+</body>
+</html>
