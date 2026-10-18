@@ -24,7 +24,7 @@ A printable one-pager: the max-pay formula, 10 category price targets (tools, co
 
 A one-time $9 Pro version adds batch sourcing (paste a whole list, get max buy prices), an inventory P&L tracker with CSV export for taxes, editable fee rates, and a printable fee sheet. Single HTML file, works offline, no subscription, no account.
 
-**→ https://wader.gumroad.com/l/jfrxk**
+**→ https://wadeross.gumroad.com/l/jfrxk**
 
 ## Tech
 
